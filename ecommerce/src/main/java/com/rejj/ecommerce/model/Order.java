@@ -30,4 +30,64 @@ public class Order {
     @Column(name = "DATE", nullable = false, updatable = false)
     private Date date;
 
+    public Order() {
+    }
+
+    public Order(Integer id, Cart cart, Carrier carrier, Client client, String status, Date date) {
+        this.id = id;
+        this.cart = cart;
+        this.carrier = carrier;
+        this.client = client;
+        this.status = status;
+        this.date = date;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public Carrier getCarrier() {
+        return carrier;
+    }
+
+    public void setCarrier(Carrier carrier) {
+        this.carrier = carrier;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
 }
