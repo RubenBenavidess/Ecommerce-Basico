@@ -16,7 +16,7 @@ public class Order {
     private Cart cart;
 
     @ManyToOne
-    @JoinColumn(name = "ID_CARRIER")
+    @JoinColumn(name = "ID_CARRIER", nullable = false)
     private Carrier carrier;
 
     @ManyToOne

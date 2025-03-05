@@ -2,8 +2,8 @@ package com.rejj.ecommerce.dto;
 
 public class CartDetailDTO {
 
-    private Integer id_cart;
     private Integer id_prod;
+    private Integer id_cart;
     private Integer items;
 
     public CartDetailDTO() {

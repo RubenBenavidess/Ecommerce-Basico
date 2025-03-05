@@ -97,8 +97,6 @@ public class ProductService {
         Product product = productRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Producto inexistente."));
 
-
-        /* send this to controller */
         if(productDTO.getPrice() < 0){
             throw new RuntimeException("El precio no puede ser negativo.");
         }
