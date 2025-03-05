@@ -21,7 +21,7 @@ public class CarrierService {
     /*
      * Get carrier by its id
      */
-    public Carrier getCarrierById(Integer id){
+    public Carrier getCarrierById(Long id){
         Carrier carrier = carrierRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Transportista no encontrado"));
 
@@ -44,7 +44,7 @@ public class CarrierService {
     /*
      * Update carrier
      */
-    public Carrier updateCarrier(Integer id, Carrier carrier){
+    public Carrier updateCarrier(Long id, Carrier carrier){
         
         Carrier carrierTo = carrierRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Transportista no encontrado"));
@@ -58,7 +58,7 @@ public class CarrierService {
     /*
      * Delete carrier
      */
-    public void deleteCarrier(Integer id){
+    public void deleteCarrier(Long id){
         carrierRepository.deleteById(id);
     }
 

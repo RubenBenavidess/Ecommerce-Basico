@@ -1,93 +1,59 @@
 package com.rejj.ecommerce.model;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import lombok.Data;
 
-@Table(name = "ORDERS")
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
 @Entity
+@Table(name = "orders")
 public class Order {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_ORDER")
-    private Integer id;
-
-    @OneToOne(mappedBy = "order")
-    private Cart cart;
-
-    @ManyToOne
-    @JoinColumn(name = "ID_CARRIER", nullable = false)
-    private Carrier carrier;
-
-    @ManyToOne
-    @JoinColumn(name = "ID_USER", nullable = false)
+    private Long id;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
-
-    @Column(name = "STATUS", nullable = false)
-    private String status;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE", nullable = false, updatable = false)
-    private Date date;
-
+    
+    @Column(nullable = false)
+    private LocalDateTime orderDate;
+    
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+    
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> items = new ArrayList<>();
+    
+    private double totalAmount;
+    
+    @Column(length = 1000)
+    private String shippingAddress;
+    
     public Order() {
+        this.orderDate = LocalDateTime.now();
+        this.status = OrderStatus.PENDING;
     }
-
-    public Order(Integer id, Cart cart, Carrier carrier, Client client, String status, Date date) {
-        this.id = id;
-        this.cart = cart;
-        this.carrier = carrier;
-        this.client = client;
-        this.status = status;
-        this.date = date;
+    
+    public void addItem(OrderItem item) {
+        items.add(item);
+        item.setOrder(this);
+        calculateTotal();
     }
-
-    public Integer getId() {
-        return id;
+    
+    public void removeItem(OrderItem item) {
+        items.remove(item);
+        item.setOrder(null);
+        calculateTotal();
     }
-
-    public void setId(Integer id) {
-        this.id = id;
+    
+    private void calculateTotal() {
+        this.totalAmount = items.stream()
+                .mapToDouble(item -> item.getPrice() * item.getQuantity())
+                .sum();
     }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
-    public Carrier getCarrier() {
-        return carrier;
-    }
-
-    public void setCarrier(Carrier carrier) {
-        this.carrier = carrier;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
 }

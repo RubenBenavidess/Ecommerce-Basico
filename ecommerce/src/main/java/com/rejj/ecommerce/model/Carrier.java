@@ -9,7 +9,7 @@ public class Carrier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_CARRIER")
-    private Integer id;
+    private Long id;
 
     @Column(name = "CARRIER_NAME", nullable = false)
     private String carrierName;
@@ -17,16 +17,16 @@ public class Carrier {
     public Carrier() {
     }
 
-    public Carrier(Integer id, String carrierName) {
+    public Carrier(Long id, String carrierName) {
         this.id = id;
         this.carrierName = carrierName;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

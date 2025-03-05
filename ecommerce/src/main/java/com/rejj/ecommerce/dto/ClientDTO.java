@@ -4,19 +4,19 @@ import java.util.List;
 
 public class ClientDTO {
 
-    private Integer id;
+    private Long id;
     private String name;
     private String email;
     private String password;
     private String address;
     private boolean blocked;
-    private List<Integer> carts;
-    private List<Integer> orders;
+    private List<Long> carts;
+    private List<Long> orders;
 
     public ClientDTO() {
     }
 
-    public ClientDTO(Integer id, String name, String email, String password, String address, boolean blocked, List<Integer> carts, List<Integer> orders) {
+    public ClientDTO(Long id, String name, String email, String password, String address, boolean blocked, List<Long> carts, List<Long> orders) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -27,11 +27,11 @@ public class ClientDTO {
         this.orders = orders;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,19 +75,19 @@ public class ClientDTO {
         this.blocked = blocked;
     }
 
-    public List<Integer> getCarts() {
+    public List<Long> getCarts() {
         return carts;
     }
 
-    public void setCarts(List<Integer> carts) {
+    public void setCarts(List<Long> carts) {
         this.carts = carts;
     }
 
-    public List<Integer> getOrders() {
+    public List<Long> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Integer> orders) {
+    public void setOrders(List<Long> orders) {
         this.orders = orders;
     }
 

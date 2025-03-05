@@ -2,17 +2,17 @@ package com.rejj.ecommerce.dto;
 
 public class OrderDTO {
 
-    private Integer id;
-    private Integer id_cart;
-    private Integer id_carrier;
-    private Integer id_client;
+    private Long id;
+    private Long id_cart;
+    private Long id_carrier;
+    private Long id_client;
     private String status;
     private String date;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(Integer id, Integer id_cart, Integer id_carrier, Integer id_client, String status, String date) {
+    public OrderDTO(Long id, Long id_cart, Long id_carrier, Long id_client, String status, String date) {
         this.id = id;
         this.id_cart = id_cart;
         this.id_carrier = id_carrier;
@@ -21,35 +21,35 @@ public class OrderDTO {
         this.date = date;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getId_cart() {
+    public Long getId_cart() {
         return id_cart;
     }
 
-    public void setId_cart(Integer id_cart) {
+    public void setId_cart(Long id_cart) {
         this.id_cart = id_cart;
     }
 
-    public Integer getId_carrier() {
+    public Long getId_carrier() {
         return id_carrier;
     }
 
-    public void setId_carrier(Integer id_carrier) {
+    public void setId_carrier(Long id_carrier) {
         this.id_carrier = id_carrier;
     }
 
-    public Integer getId_client() {
+    public Long getId_client() {
         return id_client;
     }
 
-    public void setId_client(Integer id_client) {
+    public void setId_client(Long id_client) {
         this.id_client = id_client;
     }
 

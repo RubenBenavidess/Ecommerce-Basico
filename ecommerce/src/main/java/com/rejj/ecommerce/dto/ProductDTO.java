@@ -2,7 +2,7 @@ package com.rejj.ecommerce.dto;
 
 public class ProductDTO {
 
-    private Integer id;
+    private Long id;
     private String name;
     private String description;
     private Double price;
@@ -14,7 +14,7 @@ public class ProductDTO {
     public ProductDTO() {
     }
 
-    public ProductDTO(Integer id, String name, String description, Double price, String image, Integer stock, String category, String creationDate) {
+    public ProductDTO(Long id, String name, String description, Double price, String image, Integer stock, String category, String creationDate) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -25,11 +25,11 @@ public class ProductDTO {
         this.creationDate = creationDate;
     }
 
-    public Integer getId_prod() {
+    public Long getId_prod() {
         return id;
     }
 
-    public void setId_prod(Integer id) {
+    public void setId_prod(Long id) {
         this.id = id;
     }
 

@@ -2,16 +2,22 @@ package com.rejj.ecommerce.model;
 
 import jakarta.persistence.*;
 
-@Table(name = "ADMINISTRATORS")
 @Entity
-public class Administrator extends User{
+@DiscriminatorValue("ADMIN")
+public class Administrator extends User {
 
     public Administrator() {
         super();
+        this.setRole(Role.ADMIN);
     }
 
-    public Administrator(Integer id, String name, String email, String password, String address) {
-        super(id, name, email, password, address);
+    public Administrator(Long id, String username, String email, String password) {
+        super();
+        this.setId(id);
+        this.setUsername(username);
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setRole(Role.ADMIN);
     }
 
 }

@@ -28,26 +28,25 @@ public class CartDetailService {
      */
     public CartDetailDTO getCartDetailByIds(CartDetailID cartDetailID) {
         CartDetail cartDetail = cartDetailRepository.findById(cartDetailID)
-                .orElseThrow(() -> new RuntimeException("Detalle de carrito inexistente."));
+                .orElseThrow(() -> new RuntimeException("Cart detail not found"));
 
         return new CartDetailDTO(
-            cartDetail.getCart().getId(),
-            cartDetail.getProduct().getId(),
-            cartDetail.getItems()
+                cartDetail.getCart().getId(),
+                cartDetail.getProduct().getId(),
+                cartDetail.getItems()
         );
     }
     /*
      * Create cart detail
      */
     public CartDetailDTO createCartDetail(CartDetailDTO cartDetailDTO) {
-
         CartDetail cartDetail = new CartDetail();
 
         Product product = productRepository.findById(cartDetailDTO.getId_prod())
-                .orElseThrow(() -> new RuntimeException("Producto inexistente."));
+                .orElseThrow(() -> new RuntimeException("Product not found"));
 
         Cart cart = cartRepository.findById(cartDetailDTO.getId_cart())
-                .orElseThrow(() -> new RuntimeException("Carrito inexistente."));
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
 
         cartDetail.setProduct(product);
         cartDetail.setCart(cart);
@@ -56,7 +55,6 @@ public class CartDetailService {
         cartDetailRepository.save(cartDetail);
         CartDetailID id = new CartDetailID(cartDetail.getProduct().getId(), cartDetail.getCart().getId());
         return getCartDetailByIds(id);
-    
     }
 
     /*

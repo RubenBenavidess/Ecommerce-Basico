@@ -1,55 +1,60 @@
 package com.rejj.ecommerce.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
-@Table(name = "CARTS")
+@Data
 @Entity
+@Table(name = "carts")
 public class Cart {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_CART")
-    private Integer id;
-
-    @OneToOne
-    @JoinColumn(name = "ID_ORDER")
-    private Order order;
-
-    @ManyToOne
-    @JoinColumn(name = "ID_USER", nullable = false)
-    private Client clientC;
-
-    public Cart() {
+    private Long id;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
+    
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> items = new ArrayList<>();
+    
+    private BigDecimal totalAmount = BigDecimal.ZERO;
+    
+    public void addItem(CartItem item) {
+        items.add(item);
+        item.setCart(this);
+        calculateTotal();
     }
-
-    public Cart(Order order, Client clientC) {
-        this.order = order;
-        this.clientC = clientC;
+    
+    public void removeItem(CartItem item) {
+        items.remove(item);
+        item.setCart(null);
+        calculateTotal();
     }
-
-    public Integer getId() {
-        return id;
+    
+    public void updateItemQuantity(Long productId, int quantity) {
+        items.stream()
+            .filter(item -> item.getProduct().getId().equals(productId))
+            .findFirst()
+            .ifPresent(item -> {
+                item.setQuantity(quantity);
+                calculateTotal();
+            });
     }
-
-    public void setId(Integer id) {
-        this.id = id;
+    
+    public void clear() {
+        items.clear();
+        totalAmount = BigDecimal.ZERO;
     }
-
-    public Order getOrder() {
-        return order;
+    
+    private void calculateTotal() {
+        totalAmount = items.stream()
+            .map(item -> item.getProduct().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Client getClientC() {
-        return clientC;
-    }
-
-    public void setClientC(Client clientC) {
-        this.clientC = clientC;
-    }
-
 }

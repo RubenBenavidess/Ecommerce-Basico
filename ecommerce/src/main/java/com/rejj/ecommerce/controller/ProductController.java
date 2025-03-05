@@ -1,73 +1,66 @@
 package com.rejj.ecommerce.controller;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.rejj.ecommerce.dto.ProductRequest;
+import com.rejj.ecommerce.dto.ProductResponse;
 import com.rejj.ecommerce.service.ProductService;
-import com.rejj.ecommerce.dto.ProductDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
-
 @RestController
-@RequestMapping("/api/ecommerce/products")
+@RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductService productService; 
+    private final ProductService productService;
 
-    public ProductController(ProductService productService){
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> getAllProducts(){
-        List<ProductDTO> products = productService.getAllProducts();
-        return ResponseEntity.ok(products);
+    public ResponseEntity<Page<ProductResponse>> getAllProducts(Pageable pageable) {
+        return ResponseEntity.ok(productService.getAllProducts(pageable));
     }
-
-    /*
-     * Get product by its id
-     */
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDTO> getProductById(@PathVariable Integer id) {
-        ProductDTO product = productService.getProductById(id);
-        return ResponseEntity.ok(product);
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.getProductById(id));
     }
 
-    /*
-     * Create product
-     */
     @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {        
-        ProductDTO newProduct = productService.createProduct(productDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductRequest request) {
+        return ResponseEntity.ok(productService.createProduct(request));
     }
 
-    /*
-     * Update product
-     */
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> updateClient(@PathVariable Integer id, @RequestBody ProductDTO productDTO) {        
-        ProductDTO product = productService.updateProduct(id, productDTO);
-        return ResponseEntity.ok(product);
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ProductResponse> updateProduct(
+            @PathVariable Long id,
+            @RequestBody ProductRequest request) {
+        return ResponseEntity.ok(productService.updateProduct(id, request));
     }
 
-    /*
-     * Reduce stock
-     */
-    @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> reduceStock(@PathVariable Integer id, @RequestBody ProductDTO productDTO) {        
-        ProductDTO product = productService.reduceStock(id, productDTO);
-        return ResponseEntity.ok(product);
-    }
-
-    /*
-     * Delete product
-     */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<ProductResponse>> getProductsByCategory(@PathVariable Long categoryId) {
+        return ResponseEntity.ok(productService.getProductsByCategory(categoryId));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<ProductResponse>> searchProducts(
+            @RequestParam String query,
+            Pageable pageable) {
+        return ResponseEntity.ok(productService.searchProducts(query, pageable));
+    }
 }

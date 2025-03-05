@@ -25,8 +25,8 @@ public class CartDetailController {
 
     @GetMapping("/{id_prod}/{id_cart}")  // Orden lógico: primero el carrito, luego el producto
     public ResponseEntity<CartDetailDTO> getCartDetail(
-            @PathVariable Integer id_prod, 
-            @PathVariable Integer id_cart) {
+            @PathVariable Long id_prod, 
+            @PathVariable Long id_cart) {
 
         CartDetailID id = new CartDetailID(id_prod, id_cart); // Crear la clave compuesta
         CartDetailDTO product = cartDetailService.getCartDetailByIds(id);
@@ -49,8 +49,8 @@ public class CartDetailController {
      */
     @DeleteMapping("/{id_prod}/{id_cart}")
     public ResponseEntity<Void> deleteCartDetail(
-        @PathVariable Integer id_prod, 
-        @PathVariable Integer id_cart
+        @PathVariable Long id_prod, 
+        @PathVariable Long id_cart
     ) {
         CartDetailID id = new CartDetailID(id_prod, id_cart);
         cartDetailService.deleteCartDetail(id);

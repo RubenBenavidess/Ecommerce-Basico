@@ -4,22 +4,22 @@ import java.util.Objects;
 
 public class CartDetailID {
     
-    private Integer product;
-    private Integer cart;
+    private Long product;
+    private Long cart;
 
     // Constructor vacío
     public CartDetailID() {}
 
     // Constructor con parámetros
-    public CartDetailID(Integer product, Integer cart) {
+    public CartDetailID(Long product, Long cart) {
         this.product = product;
         this.cart = cart;
     }
     // Getters y Setters
-    public Integer getProduct() { return product; }
-    public void setProduct(Integer product) { this.product = product; }
-    public Integer getIdParte2() { return cart; }
-    public void setCart(Integer cart) { this.cart = cart; }
+    public Long getProduct() { return product; }
+    public void setProduct(Long product) { this.product = product; }
+    public Long getCart() { return cart; }
+    public void setCart(Long cart) { this.cart = cart; }
 
     @Override
     public boolean equals(Object o) {
