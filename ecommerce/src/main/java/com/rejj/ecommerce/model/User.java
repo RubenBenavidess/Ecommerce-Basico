@@ -1,78 +1,58 @@
 package com.rejj.ecommerce.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@Table(name = "USERS")
-@Inheritance(strategy = InheritanceType.JOINED)
+import java.util.Collection;
+import java.util.List;
+
+@Data
 @Entity
-public class User {
-    
+@Table(name = "users")
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Integer id;
+    private Long id;
 
-    @Column(name = "NAME", nullable = false)
-    private String name;
+    @Column(unique = true, nullable = false)
+    private String username;
 
-    @Column(name = "EMAIL", nullable = false, unique = true)
-    private String email;
-
-    @Column(name = "PASSWORD", nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    @Column(name = "ADDRESS", nullable = false)
-    private String address;
+    @Column(nullable = false)
+    private String email;
 
-    public User() {
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    private boolean enabled = true;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
-    public User(Integer id, String name, String email, String password, String address) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.address = address;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public Integer getId() {
-        return id;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
 }
