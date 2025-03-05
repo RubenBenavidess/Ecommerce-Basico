@@ -20,8 +20,8 @@ public class Order {
     private Carrier carrier;
 
     @ManyToOne
-    @JoinColumn(name = "ID_USER", nullable = false)
-    private Client client;
+    @JoinColumn(name = "ID_CLIENT", nullable = false)
+    private User clientO;
 
     @Column(name = "STATUS", nullable = false)
     private String status;
@@ -33,11 +33,11 @@ public class Order {
     public Order() {
     }
 
-    public Order(Integer id, Cart cart, Carrier carrier, Client client, String status, Date date) {
+    public Order(Integer id, Cart cart, Carrier carrier, User clientO, String status, Date date) {
         this.id = id;
         this.cart = cart;
         this.carrier = carrier;
-        this.client = client;
+        this.clientO = clientO;
         this.status = status;
         this.date = date;
     }
@@ -66,12 +66,12 @@ public class Order {
         this.carrier = carrier;
     }
 
-    public Client getClient() {
-        return client;
+    public User getClient() {
+        return clientO;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(User clientO) {
+        this.clientO = clientO;
     }
 
     public String getStatus() {

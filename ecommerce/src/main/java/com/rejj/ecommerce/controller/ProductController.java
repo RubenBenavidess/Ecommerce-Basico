@@ -47,7 +47,7 @@ public class ProductController {
      * Update product
      */
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> updateClient(@PathVariable Integer id, @RequestBody ProductDTO productDTO) {        
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Integer id, @RequestBody ProductDTO productDTO) {        
         ProductDTO product = productService.updateProduct(id, productDTO);
         return ResponseEntity.ok(product);
     }
@@ -55,7 +55,7 @@ public class ProductController {
     /*
      * Reduce stock
      */
-    @PutMapping("/{id}")
+    @PutMapping("stocks/{id}")
     public ResponseEntity<ProductDTO> reduceStock(@PathVariable Integer id, @RequestBody ProductDTO productDTO) {        
         ProductDTO product = productService.reduceStock(id, productDTO);
         return ResponseEntity.ok(product);

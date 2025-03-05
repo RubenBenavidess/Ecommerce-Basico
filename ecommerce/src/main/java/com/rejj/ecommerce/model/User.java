@@ -1,5 +1,7 @@
 package com.rejj.ecommerce.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Table(name = "USERS")
@@ -24,15 +26,32 @@ public class User {
     @Column(name = "ADDRESS", nullable = false)
     private String address;
 
+    @Column(name = "ROLE", nullable = false)
+    private String role;
+
+    @Column(name = "BLOCKED", nullable = false)
+    private boolean blocked;
+
+    @OneToMany(mappedBy = "client")
+    private List<Cart> carts;
+
+    @OneToMany(mappedBy = "clientO")
+    private List<Order> orders;
+
     public User() {
     }
 
-    public User(Integer id, String name, String email, String password, String address) {
+    public User(Integer id, String name, String email, String password, String address,
+                String role, boolean blocked, List<Cart> carts, List<Order> orders) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.address = address;
+        this.role = role;
+        this.blocked = blocked;
+        this.carts = carts;
+        this.orders = orders;
     }
 
     public Integer getId() {
@@ -73,6 +92,38 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setRole(String role){
+        this.role = role;
+    }
+
+    public String getRole(){
+        return role;
+    }
+
+    public void setBlocked(boolean blocked){
+        this.blocked = blocked;
+    }
+
+    public boolean getBlocked(){
+        return blocked;
+    }
+
+    public List<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(List<Cart> carts) {
+        this.carts = carts;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
 }

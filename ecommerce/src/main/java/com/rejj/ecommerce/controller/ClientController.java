@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.rejj.ecommerce.service.ClientService;
-import com.rejj.ecommerce.dto.ClientDTO;
+import com.rejj.ecommerce.dto.UserDTO;
 
 
 @RestController
@@ -21,8 +21,8 @@ public class ClientController {
      * Get client by its id
      */
     @GetMapping("/{id}")
-    public ResponseEntity<ClientDTO> getClientById(@PathVariable Integer id) {
-        ClientDTO client = clientService.getClientById(id);
+    public ResponseEntity<UserDTO> getClientById(@PathVariable Integer id) {
+        UserDTO client = clientService.getClientById(id);
         return ResponseEntity.ok(client);
     }
 
@@ -30,8 +30,8 @@ public class ClientController {
      * Create client
      */
     @PostMapping
-    public ResponseEntity<ClientDTO> createClient(@RequestBody ClientDTO clientDTO) {        
-        ClientDTO newClient = clientService.createClient(clientDTO);
+    public ResponseEntity<UserDTO> createClient(@RequestBody UserDTO clientDTO) {        
+        UserDTO newClient = clientService.createClient(clientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(newClient);
     }
 
@@ -39,17 +39,17 @@ public class ClientController {
      * Update client
      */
     @PutMapping("/{id}")
-    public ResponseEntity<ClientDTO> updateClient(@PathVariable Integer id, @RequestBody ClientDTO clientDTO) {        
-        ClientDTO client = clientService.updateClient(id, clientDTO);
+    public ResponseEntity<UserDTO> updateClient(@PathVariable Integer id, @RequestBody UserDTO clientDTO) {        
+        UserDTO client = clientService.updateClient(id, clientDTO);
         return ResponseEntity.ok(client);
     }
 
     /*
-     * Delete client
+     * Block client
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        clientService.deleteClient(id);
+    public ResponseEntity<Void> blockClient(@PathVariable Integer id) {
+        clientService.blockClient(id);
         return ResponseEntity.noContent().build();
     }
 }

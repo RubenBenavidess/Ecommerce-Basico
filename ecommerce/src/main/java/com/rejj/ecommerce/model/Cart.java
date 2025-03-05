@@ -17,15 +17,15 @@ public class Cart {
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "ID_USER", nullable = false)
-    private Client clientC;
+    @JoinColumn(name = "ID_CLIENT", nullable = false)
+    private User client;
 
     public Cart() {
     }
 
-    public Cart(Order order, Client clientC) {
+    public Cart(Order order, User client) {
         this.order = order;
-        this.clientC = clientC;
+        this.client = client;
     }
 
     public Integer getId() {
@@ -44,12 +44,12 @@ public class Cart {
         this.order = order;
     }
 
-    public Client getClientC() {
-        return clientC;
+    public User getClient() {
+        return client;
     }
 
-    public void setClientC(Client clientC) {
-        this.clientC = clientC;
+    public void setClient(User client) {
+        this.client = client;
     }
 
 }

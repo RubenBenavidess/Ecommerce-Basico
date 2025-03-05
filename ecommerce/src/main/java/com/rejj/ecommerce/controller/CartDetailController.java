@@ -5,9 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.rejj.ecommerce.service.CartDetailService;
 import com.rejj.ecommerce.dto.CartDetailDTO;
-import com.rejj.ecommerce.dto.ProductDTO;
 import com.rejj.ecommerce.model.CartDetailID;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/ecommerce/cart-detail")
@@ -23,7 +21,7 @@ public class CartDetailController {
      * get a cart detail
      */
 
-    @GetMapping("/{id_prod}/{id_cart}")  // Orden lógico: primero el carrito, luego el producto
+    @GetMapping("/{id_prod}/{id_cart}")
     public ResponseEntity<CartDetailDTO> getCartDetail(
             @PathVariable Integer id_prod, 
             @PathVariable Integer id_cart) {

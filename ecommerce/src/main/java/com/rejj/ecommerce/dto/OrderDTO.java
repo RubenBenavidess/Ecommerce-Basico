@@ -3,20 +3,20 @@ package com.rejj.ecommerce.dto;
 public class OrderDTO {
 
     private Integer id;
-    private Integer id_cart;
-    private Integer id_carrier;
-    private Integer id_client;
+    private Integer idCart;
+    private Integer idCarrier;
+    private Integer idClient;
     private String status;
     private String date;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(Integer id, Integer id_cart, Integer id_carrier, Integer id_client, String status, String date) {
+    public OrderDTO(Integer id, Integer idCart, Integer idCarrier, Integer idClient, String status, String date) {
         this.id = id;
-        this.id_cart = id_cart;
-        this.id_carrier = id_carrier;
-        this.id_client = id_client;
+        this.idCart = idCart;
+        this.idCarrier = idCarrier;
+        this.idClient = idClient;
         this.status = status;
         this.date = date;
     }
@@ -29,28 +29,28 @@ public class OrderDTO {
         this.id = id;
     }
 
-    public Integer getId_cart() {
-        return id_cart;
+    public Integer getIdCart() {
+        return idCart;
     }
 
-    public void setId_cart(Integer id_cart) {
-        this.id_cart = id_cart;
+    public void setIdCart(Integer idCart) {
+        this.idCart = idCart;
     }
 
-    public Integer getId_carrier() {
-        return id_carrier;
+    public Integer getIdCarrier() {
+        return idCarrier;
     }
 
-    public void setId_carrier(Integer id_carrier) {
-        this.id_carrier = id_carrier;
+    public void setIdCarrier(Integer idCarrier) {
+        this.idCarrier = idCarrier;
     }
 
-    public Integer getId_client() {
-        return id_client;
+    public Integer getIdClient() {
+        return idClient;
     }
 
-    public void setId_client(Integer id_client) {
-        this.id_client = id_client;
+    public void setIdClient(Integer idClient) {
+        this.idClient = idClient;
     }
 
     public String getStatus() {

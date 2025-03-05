@@ -5,22 +5,22 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.rejj.ecommerce.repository.CartRepository;
-import com.rejj.ecommerce.repository.ClientRepository;
+import com.rejj.ecommerce.repository.UserRepository;
 import com.rejj.ecommerce.repository.OrderRepository;
-import com.rejj.ecommerce.model.Client;
+import com.rejj.ecommerce.model.User;
 import com.rejj.ecommerce.model.Order;
-import com.rejj.ecommerce.dto.ClientDTO;
+import com.rejj.ecommerce.dto.UserDTO;
 import com.rejj.ecommerce.model.Cart;
 import java.util.List;
 
 @Service
 public class ClientService {
 
-    private final ClientRepository clientRepository;
+    private final UserRepository clientRepository;
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
 
-    public ClientService(ClientRepository clientRepository, CartRepository cartRepository, OrderRepository orderRepository){
+    public ClientService(UserRepository clientRepository, CartRepository cartRepository, OrderRepository orderRepository){
         this.clientRepository = clientRepository;
         this.cartRepository = cartRepository;
         this.orderRepository = orderRepository;
@@ -34,9 +34,9 @@ public class ClientService {
      * Get a client by its id
      */
     
-    public ClientDTO getClientById(Integer id){
+    public UserDTO getClientById(Integer id){
         
-        Client client = clientRepository.findById(id)
+        User client = clientRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Cliente inexistente."));
 
         List<Integer> carts = (client.getCarts() != null) ?
@@ -51,13 +51,14 @@ public class ClientService {
                 .collect(Collectors.toList())
         : List.of();
 
-        return new ClientDTO(
+        return new UserDTO(
             client.getId(),
             client.getName(),
             client.getEmail(),
             client.getPassword(),
             client.getAddress(),
-            client.isBlocked(),
+            client.getRole(),
+            client.getBlocked(),
             carts,
             orders
         );
@@ -68,9 +69,9 @@ public class ClientService {
       * Create a client
       */
 
-    public ClientDTO createClient(ClientDTO clientDTO){
+    public UserDTO createClient(UserDTO clientDTO){
 
-        Client client = new Client();
+        User client = new User();
 
         if(clientDTO.getCarts() != null & !clientDTO.getCarts().isEmpty()){
             List<Cart> carts = cartRepository.findAllById(clientDTO.getCarts());
@@ -88,6 +89,8 @@ public class ClientService {
         client.setBlocked(clientDTO.isBlocked());
         client.setEmail(clientDTO.getEmail());
         client.setPassword(clientDTO.getPassword());
+        client.setRole(clientDTO.getRole());
+        client.setBlocked(clientDTO.isBlocked());
 
         clientRepository.save(client);
         return getClientById(client.getId());
@@ -97,9 +100,9 @@ public class ClientService {
      * Update client
      */
 
-    public ClientDTO updateClient(Integer id, ClientDTO clientDTO){
+    public UserDTO updateClient(Integer id, UserDTO clientDTO){
 
-        Client client = clientRepository.findById(id)
+        User client = clientRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Cliente inexistente."));
 
         if(clientDTO.getCarts() != null & !clientDTO.getCarts().isEmpty()){
@@ -115,19 +118,24 @@ public class ClientService {
         
         client.setName(clientDTO.getName());
         client.setAddress(clientDTO.getAddress());
-        client.setBlocked(clientDTO.isBlocked());
         client.setEmail(clientDTO.getEmail());
-        client.setPassword(clientDTO.getPassword());
 
         clientRepository.save(client);
         return getClientById(client.getId()); 
     }
     
     /*
-     * Delete client
+     * Block client
      */
 
-    public void deleteClient(Integer id){
-        clientRepository.deleteById(id);
+    public void blockClient(Integer id){
+        
+        User client = clientRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Cliente inexistente."));
+
+        client.setBlocked(true);
+
+        clientRepository.save(client);
+
     }
 }

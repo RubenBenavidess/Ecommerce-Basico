@@ -14,9 +14,9 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
     private final CarrierRepository carrierRepository;
-    private final ClientRepository clientRepository;
+    private final UserRepository clientRepository;
 
-    public OrderService(OrderRepository orderRepository, CartRepository cartRepository, CarrierRepository carrierRepository, ClientRepository clientRepository) {
+    public OrderService(OrderRepository orderRepository, CartRepository cartRepository, CarrierRepository carrierRepository, UserRepository clientRepository) {
         this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
         this.carrierRepository = carrierRepository;
@@ -52,13 +52,13 @@ public class OrderService {
 
         Order order = new Order();
 
-        Cart cart = cartRepository.findById(orderDTO.getId_cart())
+        Cart cart = cartRepository.findById(orderDTO.getIdCart())
                 .orElseThrow(() -> new RuntimeException("Carrito inexistente."));
 
-        Carrier carrier = carrierRepository.findById(orderDTO.getId_carrier())
+        Carrier carrier = carrierRepository.findById(orderDTO.getIdCarrier())
                 .orElseThrow(()-> new RuntimeException("Motorizado inexistente"));
 
-        Client client = clientRepository.findById(orderDTO.getId_client())
+        User client = clientRepository.findById(orderDTO.getIdClient())
                 .orElseThrow(() -> new RuntimeException("Cliente inexistente"));
 
         order.setCart(cart);
