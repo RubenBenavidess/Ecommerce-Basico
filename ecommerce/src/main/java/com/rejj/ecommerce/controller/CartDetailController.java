@@ -25,7 +25,7 @@ public class CartDetailController {
     public ResponseEntity<CartDetailDTO> getCartDetail(
             @PathVariable Integer id_prod, 
             @PathVariable Integer id_cart) {
-
+        System.out.println("-------------WORKING!!");
         CartDetailID id = new CartDetailID(id_prod, id_cart); // Crear la clave compuesta
         CartDetailDTO product = cartDetailService.getCartDetailByIds(id);
 

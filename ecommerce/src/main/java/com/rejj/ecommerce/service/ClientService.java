@@ -88,7 +88,11 @@ public class ClientService {
         client.setAddress(clientDTO.getAddress());
         client.setBlocked(clientDTO.isBlocked());
         client.setEmail(clientDTO.getEmail());
+
         client.setPassword(clientDTO.getPassword());
+
+        
+
         client.setRole(clientDTO.getRole());
         client.setBlocked(clientDTO.isBlocked());
 

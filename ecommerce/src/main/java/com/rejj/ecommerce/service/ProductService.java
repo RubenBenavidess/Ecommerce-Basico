@@ -53,8 +53,7 @@ public class ProductService {
             product.getImage(),
             product.getStock(),
             product.getCategory(),
-            product.getCreationDate().toString() // Not sure how it will work xd
-                                                 // I mean, probably it will charge the exact hour too
+            product.getCreationDate().toString() // Not sure how it will work. I mean, probably it will charge the exact hour too
         );
 
     }
@@ -66,6 +65,14 @@ public class ProductService {
     public ProductDTO createProduct(ProductDTO productDTO){
 
         Product product = new Product();
+
+        if(productDTO.getPrice() < 0){
+            throw new RuntimeException("El precio no puede ser negativo.");
+        }
+
+        if(productDTO.getStock() < 0){
+            throw new RuntimeException("El stock no puede ser negativo.");
+        }
 
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
