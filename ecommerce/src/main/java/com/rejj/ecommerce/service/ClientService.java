@@ -2,6 +2,9 @@ package com.rejj.ecommerce.service;
 
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.rejj.ecommerce.repository.CartRepository;
@@ -11,10 +14,12 @@ import com.rejj.ecommerce.model.User;
 import com.rejj.ecommerce.model.Order;
 import com.rejj.ecommerce.dto.UserDTO;
 import com.rejj.ecommerce.model.Cart;
+
+import java.util.Collection;
 import java.util.List;
 
 @Service
-public class ClientService {
+public class ClientService implements UserDetailsService{
 
     private final UserRepository clientRepository;
     private final CartRepository cartRepository;
@@ -142,4 +147,17 @@ public class ClientService {
         clientRepository.save(client);
 
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        
+        User user = clientRepository.findByEmail(email)
+        .orElseThrow(() -> new RuntimeException("Cliente inexistente."));
+
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), 
+            List.of(new org.springframework.security.core.authority.SimpleGrantedAuthority(user.getRole())));
+
+    }
+
+
 }

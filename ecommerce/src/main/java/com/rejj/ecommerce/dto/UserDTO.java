@@ -17,8 +17,12 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(Integer id, String name, String email, String password, String address, 
-    String role, boolean blocked, List<Integer> carts, List<Integer> orders) {
+    public UserDTO(
+        Integer id, String name, 
+        String email, String password, 
+        String address, String role, 
+        boolean blocked, List<Integer> carts, 
+        List<Integer> orders) {
         this.id = id;
         this.name = name;
         this.email = email;

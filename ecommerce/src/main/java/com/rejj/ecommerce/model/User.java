@@ -1,5 +1,6 @@
 package com.rejj.ecommerce.model;
 
+import java.util.Collection;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -38,15 +39,12 @@ public class User {
     @OneToMany(mappedBy = "clientO")
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Token> tokens;
 
     public User() {
     }
 
     public User(Integer id, String name, String email, String password, String address,
-                String role, boolean blocked, List<Cart> carts, List<Order> orders,
-                List<Token> tokens) {
+                String role, boolean blocked, List<Cart> carts, List<Order> orders) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -56,7 +54,6 @@ public class User {
         this.blocked = blocked;
         this.carts = carts;
         this.orders = orders;
-        this.tokens = tokens;
     }
 
     public Integer getId() {
@@ -129,14 +126,6 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
-    }
-
-    public void setTokens(List<Token> tokens){
-        this.tokens = tokens;
-    }
-
-    public List<Token> getTokens(){
-        return tokens;
     }
 
 }
