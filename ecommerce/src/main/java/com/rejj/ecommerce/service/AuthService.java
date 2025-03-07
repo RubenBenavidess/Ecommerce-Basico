@@ -3,8 +3,6 @@ package com.rejj.ecommerce.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.rejj.ecommerce.controller.RegisterRequest;
-import com.rejj.ecommerce.controller.TokenResponse;
 import com.rejj.ecommerce.model.User;
 import com.rejj.ecommerce.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,23 +14,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public TokenResponse register(RegisterRequest request){
-        
-        User user = new User();
-    
-        user.setName(request.name());
-        user.setAddress(request.address());
-        user.setEmail(request.email());
-        user.setPassword(passwordEncoder.encode(request.password()));
 
-        userRepository.save(user);
-
-        
-
-        return null;
-        
-
-    }
 
 
 }
